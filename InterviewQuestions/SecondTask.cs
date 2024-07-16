@@ -8,10 +8,15 @@ namespace InterviewQuestions
     {
         internal static long GetNumberOfWaysToGetUpTheStairs(int stairsCount)
         {
-            //return RecGetNumberOfWays(stairsCount);
             return GetNumberOfWays(stairsCount);
         }
 
+        /// <summary>
+        /// Current realization isn`t optimized one.
+        /// You will get performance troubles at pretty low "stairsCount" value.
+        /// Logarithmic optimizations can be performed, but author of this solution
+        /// didn`t have enough time to implement them.
+        /// </summary>
         private static long GetNumberOfWays(int stairsCount)
         {
             var stack = new Stack<int>();
@@ -33,26 +38,6 @@ namespace InterviewQuestions
                 }
             }
             return totalNumberOfWays;
-        }
-
-        private static long RecGetNumberOfWays(int numberOfStairs)
-        {
-            if (numberOfStairs < 0)
-            {
-                return 0;
-            }
-
-            if (numberOfStairs == 0)
-            {
-                return 1;
-            }
-
-            long totalNumber = 0;
-            totalNumber += RecGetNumberOfWays(numberOfStairs - 1);
-            totalNumber += RecGetNumberOfWays(numberOfStairs - 2);
-            totalNumber += RecGetNumberOfWays(numberOfStairs - 3);
-
-            return totalNumber;
         }
     }
 }
