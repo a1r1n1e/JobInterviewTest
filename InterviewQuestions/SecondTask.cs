@@ -33,15 +33,48 @@ namespace InterviewQuestions
         }
 
         /// <summary>
-        /// Naive factorial calculation.
-        /// Unefficient.
+        /// Primes powers factorial algorithm.
         /// </summary>
         static BigInteger Factorial(int n)
         {
-            BigInteger result = 1;
-            for (int i = 1; i <= n; ++i)
+            if (n < 0)
             {
-                result *= i;
+                return 0;
+            }
+            if (n == 0)
+            {
+                return 1;
+            }
+            if (n == 1 || n == 2)
+            {
+                return n;
+            }
+            bool[] isCompositeNumFlags = new bool[n + 1];
+            List<Tuple<int, int>> primes = new List<Tuple<int, int>>();
+            for (int i = 2; i <= n; ++i)
+            {
+                if (!isCompositeNumFlags[i])
+                {
+                    int k = n / i;
+                    int c = 0;
+                    while (k > 0)
+                    {
+                        c += k;
+                        k /= i;
+                    }
+                    primes.Add(new Tuple<int, int>(i, c));
+                    int j = 2;
+                    while (i * j <= n)
+                    {
+                        isCompositeNumFlags[i * j] = true;
+                        ++j;
+                    }
+                }
+            }
+            BigInteger result = 1;
+            for (int i = primes.Count() - 1; i >= 0; --i)
+            {
+                result *= BigInteger.Pow(primes[i].Item1, primes[i].Item2);
             }
             return result;
         }
